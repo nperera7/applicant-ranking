@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "id": "63dd55b2-a99f-4e7b-985f-22c7bf80ab42",
+      "text": "Underqualified",
+      "status": "active",
+      "type": "non-hired"
+    },
+    {
+      "id": "41f98875-06c7-4cb1-b3d0-07f7ae192c0c",
+      "text": "Culture Fit",
+      "status": "active",
+      "type": "non-hired"
+    },
+    {
+      "id": "737b8899-7f32-42a5-954f-e199b0306fcb",
+      "text": "Timing",
+      "status": "active",
+      "type": "non-hired"
+    },
+    {
+      "id": "3274b963-c37c-4465-abeb-1113896e2aa3",
+      "text": "Withdrew",
+      "status": "active",
+      "type": "non-hired"
+    },
+    {
+      "id": "1fdbfaac-4c73-45f7-af32-369054426364",
+      "text": "Offer declined",
+      "status": "active",
+      "type": "non-hired"
+    },
+    {
+      "id": "16308515-dc77-4aa7-b3af-96161b2b4e9b",
+      "text": "Hired",
+      "status": "active",
+      "type": "hired"
+    },
+    {
+      "id": "9b6f482e-0399-4ba4-9a2f-1e1d9e3da15b",
+      "text": "Position filled",
+      "status": "inactive",
+      "type": "non-hired"
+    }
+  ]
+}

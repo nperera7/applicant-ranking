@@ -1,0 +1,179 @@
+{
+  "data": [
+    {
+      "id": "250d8f03-738a-4bba-a671-8a3d73477145",
+      "name": "Shane Smith",
+      "headline": "Brickly LLC, Vandelay Industries, Inc, Central Perk",
+      "contact": "7f23e772-f2cb-4ebb-b33f-54b872999992",
+      "emails": [
+        "shane@exampleq3.com"
+      ],
+      "phones": [
+        {
+          "value": "(123) 456-7891"
+        }
+      ],
+      "confidentiality": "non-confidential",
+      "location": "Oakland",
+      "locationDetails": {
+        "addressLine1": "1955 Broadway",
+        "city": "Oakland",
+        "region": "CA",
+        "postalCode": "94612",
+        "country": "US"
+      },
+      "links": [
+        "indeed.com/r/Shane-Smith/0b7c87f6b246d2bc"
+      ],
+      "createdAt": 1407460071043,
+      "updatedAt": 1407460080914,
+      "lastInteractionAt": 1417588008760,
+      "lastAdvancedAt": 1417587916150,
+      "snoozedUntil": 1505971500000,
+      "archivedAt": null,
+      "archiveReason": null,
+      "stage": "00922a60-7c15-422b-b086-f62000824fd7",
+      "stageChanges": [
+        {
+          "toStageId": "00922a60-7c15-422b-b086-f62000824fd7",
+          "toStageIndex": 1,
+          "userId": "df0adaa6-172c-4cd6-8520-49b203660fe1",
+          "updatedAt": 1407460071043
+        }
+      ],
+      "owner": "df0adaa6-172c-4cd6-8520-49b203660fe1",
+      "tags": [
+        "San Francisco",
+        "Full-time",
+        "Support",
+        "Customer Success",
+        "Customer Success Manager"
+      ],
+      "sources": [
+        "linkedin"
+      ],
+      "origin": "sourced",
+      "sourcedBy": "df0adaa6-172c-4cd6-8520-49b203660fe1",
+      "applications": [
+        "cdb4ff13-f7aa-49b0-b6ec-eb4617009cfa"
+      ],
+      "resume": null,
+      "followers": [
+        "df0adaa6-172c-4cd6-8520-49b203660fe1",
+        "ecdb6670-d9f3-4b87-8267-1cde26d1bc42",
+        "022d6639-1333-419b-9635-31f93015335f"
+      ],
+      "urls": {
+        "list": "https://hire.lever.co/candidates",
+        "show": "https://hire.lever.co/candidates/250d8f03-738a-4bba-a671-8a3d73477145"
+      },
+      "dataProtection": {
+        "store": {
+          "allowed": true,
+          "expiresAt": 1522540800000
+        },
+        "contact": {
+          "allowed": false,
+          "expiresAt": null
+        }
+      },
+      "isAnonymized": false
+    },
+    {
+      "id": "5c86dcd8-6cf1-40da-9ae3-5e7ea91079f5",
+      "name": "Chaofan West",
+      "headline": "Grunnings, Inc., Coffee Bean, Ltd, Betelgeuse Commercial Service Co., Ltd, Double C Private Co., Ltd",
+      "contact": "bd4d81c8-7858-4624-be98-552dfb9ca850",
+      "emails": [
+        "chaofan@example.com"
+      ],
+      "phones": [
+        {
+          "value": "(123) 456-7891"
+        }
+      ],
+      "location": "San Francisco",
+      "links": [
+        "indeed.com/r/Chaofan-West/4f2c7523b0edefbb"
+      ],
+      "createdAt": 1407778275799,
+      "lastInteractionAt": 1417587990376,
+      "lastAdvancedAt": 1417587903121,
+      "snoozedUntil": 1499577840000,
+      "archivedAt": null,
+      "archiveReason": null,
+      "stage": "00922a60-7c15-422b-b086-f62000824fd7",
+      "owner": "ecdb6670-d9f3-4b87-8267-1cde26d1bc42",
+      "tags": [
+        "San Francisco",
+        "Marketing",
+        "Customer Success",
+        "Customer Success Manager",
+        "Full-time"
+      ],
+      "sources": [
+        "Job site"
+      ],
+      "origin": "applied",
+      "sourcedBy": null,
+      "applications": [
+        "e326d6e6-e3f6-46eb-9c14-6f90b88aacac"
+      ],
+      "resume": null,
+      "followers": [
+        "df0adaa6-172c-4cd6-8520-49b203660fe1",
+        "ecdb6670-d9f3-4b87-8267-1cde26d1bc42",
+        "022d6639-1333-419b-9635-31f93015335f"
+      ],
+      "dataProtection": null
+    },
+    {
+      "id": "37caee03-bd3f-487d-b32e-a296ce05aa6b",
+      "name": "Roberta Easton",
+      "headline": "Useful Information Access",
+      "contact": "853af6b1-71a2-46d7-a430-c067e28b08f9",
+      "emails": [
+        "roberta@exampleq3.com"
+      ],
+      "phones": [
+        {
+          "value": "(123) 456-7891"
+        }
+      ],
+      "location": "San Jose",
+      "links": [
+        "https://linkedin.com/in/roberta-e"
+      ],
+      "createdAt": 1407778277088,
+      "lastInteractionAt": 1417587981210,
+      "lastAdvancedAt": 1417587891220,
+      "snoozedUntil": 1420266291216,
+      "archivedAt": null,
+      "archiveReason": null,
+      "stage": "00922a60-7c15-422b-b086-f62000824fd7",
+      "owner": "ecdb6670-d9f3-4b87-8267-1cde26d1bc42",
+      "tags": [
+        "San Francisco",
+        "Marketing",
+        "Customer Success",
+        "Customer Success Manager",
+        "Full-time"
+      ],
+      "sources": [
+        "Job site"
+      ],
+      "origin": "applied",
+      "sourcedBy": null,
+      "applications": [
+        "eb91c63f-3511-4e9d-a805-aaa92f0c80c9"
+      ],
+      "resume": null,
+      "followers": [
+        "df0adaa6-172c-4cd6-8520-49b203660fe1",
+        "ecdb6670-d9f3-4b87-8267-1cde26d1bc42",
+        "022d6639-1333-419b-9635-31f93015335f"
+      ],
+      "dataProtection": null
+    }
+  ]
+}

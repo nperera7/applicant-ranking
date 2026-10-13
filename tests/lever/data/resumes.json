@@ -1,0 +1,206 @@
+{
+  "data": [
+    {
+      "id": "68b3e478-ff21-4529-bd29-23ed016042d7",
+      "createdAt": 1468953420000,
+      "file": {
+        "name": "JenniferOldeUpdated.pdf",
+        "ext": "pdf",
+        "downloadUrl": "https://hire.lever.co/candidates/63f6f017-d741-4117-9f63-57e3531a6a58/resumes/68b3e478-ff21-4529-bd29-23ed016042d7/download",
+        "uploadedAt": 1468953420004,
+        "status": "processed",
+        "size": 1000
+      },
+      "parsedData": {
+        "positions": [
+          {
+            "org": "Tomato Emporium",
+            "title": "VP Digital Media Productions",
+            "summary": "● Started as executive assistant to the CEO before heading the digital media department● Supervised all online placement of materials including marketing, social media channels (YouTube, FB, IG) and production material● Worked closely with marketing & production in producing several annual competitions/shows● PM for website and coordinated with outsource programmers and in-house graphic designer● Worked with Google and Intel on partnerships",
+            "location": "Los Angeles, CA",
+            "start": {
+              "year": 2012,
+              "month": 7
+            },
+            "end": {
+              "year": 2016,
+              "month": 3
+            }
+          },
+          {
+            "org": "Counterintuitive Entertainment",
+            "title": "Production Assistant, Production Coordinator",
+            "summary": "● PA for several reality TV shows produced by Counterintuitive Entertainment● Facilitate communication between departments● Report directly to Assistant Director of shows● Manage shoots/call times/office work",
+            "location": "Los Angeles, CA",
+            "start": {
+              "year": 2010,
+              "month": 9
+            },
+            "end": {
+              "year": 2012,
+              "month": 3
+            }
+          },
+          {
+            "org": "Eggplant Publications",
+            "title": "Editor in Chief, Layout, Photographer",
+            "summary": "● Editor in chief of college yearbook● Grew yearbook staff from 2 to 15 and taught students how to use Adobe Suite for layouts● Developed a workflow for having copy/layout approved and shipped for production● Structured separate branches to break up responsibilities between different contributors to the yearbook● Managed budgeting and marketing as well as liaison with publishing company",
+            "location": "New York, NY",
+            "start": {
+              "year": 2008,
+              "month": 9
+            },
+            "end": {
+              "year": 2010,
+              "month": 5
+            }
+          }
+        ],
+        "schools": [
+          {
+            "org": "New York University Stern",
+            "degree": "BS Marketing",
+            "field": "Marketing, Studio Arts and Film",
+            "summary": "Marketing degree with a focus on the film industry",
+            "start": {
+              "year": 2007,
+              "month": 9
+            },
+            "end": {
+              "year": 2010,
+              "month": 5
+            }
+          },
+          {
+            "org": "Savannah College of Art and Design",
+            "degree": "",
+            "field": "Graphic Design, Studio Arts",
+            "summary": null,
+            "start": {
+              "year": 2006,
+              "month": 9
+            },
+            "end": {
+              "year": 2007,
+              "month": 6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "dbc687c8-ebd4-4333-ab6a-1297738ebd5a",
+      "createdAt": 1407460071043,
+      "file": {
+        "name": "Jennifer-Olde.pdf",
+        "ext": "pdf",
+        "downloadUrl": "https://hire.lever.co/candidates/63f6f017-d741-4117-9f63-57e3531a6a58/resumes/dbc687c8-ebd4-4333-ab6a-1297738ebd5a/download",
+        "uploadedAt": 1407460071048,
+        "status": "processed",
+        "size": 2000
+      },
+      "parsedData": {
+        "positions": [
+          {
+            "org": "Counterintuitive Entertainment",
+            "title": "Production Assistant, Production Coordinator",
+            "summary": "● PA for several reality TV shows produced by Counterintuitive Entertainment● Facilitate communication between departments● Report directly to Assistant Director of shows● Manage shoots/call times/office work",
+            "location": "Los Angeles, CA",
+            "start": {
+              "year": 2010,
+              "month": 9
+            },
+            "end": {
+              "year": 2012,
+              "month": 3
+            }
+          },
+          {
+            "org": "Eggplant Publications",
+            "title": "Editor in Chief, Layout, Photographer",
+            "summary": "● Editor in chief of college yearbook● Grew yearbook staff from 2 to 15 and taught students how to use Adobe Suite for layouts● Developed a workflow for having copy/layout approved and shipped for production● Structured separate branches to break up responsibilities between different contributors to the yearbook● Managed budgeting and marketing as well as liaison with publishing company",
+            "location": "New York, NY",
+            "start": {
+              "year": 2008,
+              "month": 9
+            },
+            "end": {
+              "year": 2010,
+              "month": 5
+            }
+          },
+          {
+            "org": "Hreff Jones Publications",
+            "title": "Sales & Marketing Intern",
+            "summary": "● Help a new school start planning their yearbook● Learned the sales side of publications and how to pitch different packages● Helped develop marketing materials and splash pages",
+            "location": "New York, NY",
+            "start": {
+              "year": 2009,
+              "month": 5
+            },
+            "end": {
+              "year": 2009,
+              "month": 8
+            }
+          },
+          {
+            "org": "Summer Arts Camp for High Achievers",
+            "title": "Jr. Director, Summer Academy Instructor",
+            "summary": "● Summer camp job working with children age 3 - 18● Created lesson plans for 2 week summer camps for 3 separate age groups● Taught the high school portfolio prep class helping students create portfolios for college applications",
+            "location": "Boston, MA",
+            "start": {
+              "year": 2005,
+              "month": 5
+            },
+            "end": {
+              "year": 2008,
+              "month": 8
+            }
+          }
+        ],
+        "schools": [
+          {
+            "org": "New York University Stern",
+            "degree": "BS Marketing",
+            "field": "Marketing, Studio Arts and Film",
+            "summary": "Marketing degree with a focus on the film industry",
+            "start": {
+              "year": 2007,
+              "month": 9
+            },
+            "end": {
+              "year": 2010,
+              "month": 5
+            }
+          },
+          {
+            "org": "Savannah College of Art and Design",
+            "degree": "",
+            "field": "Graphic Design, Studio Arts",
+            "summary": null,
+            "start": {
+              "year": 2006,
+              "month": 9
+            },
+            "end": {
+              "year": 2007,
+              "month": 6
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "14408ec1-1a41-48ba-ac76-cb3700c13d89",
+      "createdAt": 1407460071043,
+      "file": {
+        "name": "Jennifer-Olde-Corrupted-File.pdf",
+        "ext": "pdf",
+        "downloadUrl": "https://hire.lever.co/candidates/63f6f017-d741-4117-9f63-57e3531a6a58/resumes/14408ec1-1a41-48ba-ac76-cb3700c13d89/download",
+        "uploadedAt": 1407460071048,
+        "status": "error",
+        "size": 3000
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "data": [
+    {
+      "id": "8d49b010-cc6a-4f40-ace5-e86061c677ed",
+      "name": "Chandler Bing",
+      "username": "chandler",
+      "email": "chandler@example.com",
+      "createdAt": 1407357447018,
+      "deactivatedAt": 1409556487918,
+      "externalDirectoryId": "2277399",
+      "accessRole": "super admin",
+      "photo": "https://gravatar.com/avatar/gp781413e3bb44143bddf43589b03038?s=26&d=404",
+      "linkedContactIds": [
+        "38f608d5-9a60-4960-83c1-99d18f40c428"
+      ],
+      "jobTitle": "IT procurements manager",
+      "managerId": "1da88e6b-c49f-4945-a9fc-c1ce2d36c031"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Local state and secrets: never commit candidate data or credentials
+.env
+.env.*
+!.env.example
+/data/
+*.sqlite
+*.sqlite3
+*.db
+/reports/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# direnv: .envrc holds personal identity wiring, so it stays local
+.direnv/
+.envrc
+
+# Local research notes and saved third-party docs
+/.research/

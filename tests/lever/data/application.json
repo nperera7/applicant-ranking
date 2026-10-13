@@ -1,0 +1,23 @@
+{
+  "id": "6ffe4153-60bb-4e30-bfbe-bd9b9775879c",
+  "opportunityId": "250d8f03-738a-4bba-a671-8a3d73477145",
+  "candidateId": "250d8f03-738a-4bba-a671-8a3d73477145",
+  "createdAt": 1418353241665,
+  "type": "posting",
+  "posting": "6a1e4b79-75a3-454f-9417-ea79612b9585",
+  "user": null,
+  "name": "Teresa Kale",
+  "email": "teresa@example3.com",
+  "phone": {"type": null, "value": "(123) 456-7888"},
+  "referer": "https://boards.lever.co/job",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+  "acceptLanguage": "en-US,en;q=0.9",
+  "timezone": "America/New_York",
+  "ipAddress": "203.0.113.42",
+  "ownerId": "08dc4719-1081-48a5-b7a3-26471b580be1",
+  "hiringManager": "044140c7-86b4-42cb-9faf-7b93121c25d1",
+  "company": null,
+  "links": null,
+  "resume": null,
+  "customQuestions": []
+}

@@ -1,0 +1,1291 @@
+# Protected characteristics and proxies: the Applicant Ranking lexicon.
+#
+# OWNERSHIP: Egen Legal and HR own this list. Engineering drafted it from the
+# anti-discrimination laws that apply (federal Title VII, ADEA, ADA, GINA, PDA/PWFA, USERRA and IRCA;
+# the Illinois Human Rights Act, including HB 3773's ban on zip codes as a proxy; the
+# NYC Human Rights Law, including height/weight, caregiver status, unemployment status
+# and arrest/conviction records; California FEHA; Colorado). It is NOT legal advice and
+# must not change without Legal/HR review. Record each review under `metadata` below.
+#
+# HOW IT IS USED
+# 1. Criteria linting: any hit in a role's title, summary, requirement or knockout
+#    descriptions, or guardrails is an error, so the criteria cannot be used in any
+#    mode until it is rewritten.
+# 2. Model output validation: strengths, gaps, red-flag details, the summary and the
+#    per-requirement notes are scanned. On a hit the model is asked once to rewrite
+#    (the request names the category and the model's own words that hit it). If the
+#    rewrite still hits, the evaluation goes to human review and none of the model's
+#    text is written back to Lever. Evidence quotes copied from the resume are not
+#    scanned; a fuzzily matched quote whose model wording adds a term the resume span
+#    lacks is discarded as ungrounded.
+#
+# MATCHING RULES (see applicant_ranking/scoring/lexicon.py)
+# - Case-insensitive, whole words or phrases. Inside a phrase, a space also matches
+#   any run of spaces or hyphens: "able bodied" matches "able-bodied".
+# - Entries starting with `re:` are Python regular expressions, matched as written
+#   (case-insensitive; write \b for word boundaries). Quote them with single quotes.
+# - `allow_phrases` are blanked out before scanning, so "React Native", "white paper"
+#   or "race condition" never count as hits. Add an allow phrase for a technical or
+#   business phrase that would otherwise trigger a false positive. Never add one that
+#   could describe a person.
+#
+# EDITING GUIDANCE
+# - Prefer specific phrases over bare words that have a common technical meaning:
+#   "years old", "too old" and "older workers" instead of "old"; "single mother" and
+#   "marital status" instead of "single"; "visa sponsorship" instead of "sponsor"
+#   (which also means a project sponsor). Bare words that are kept even though they
+#   have rare technical uses ("he", "his", "veteran", "young", "black", "white") are
+#   kept on purpose: the model must say "the candidate", and a false positive costs
+#   only one corrective retry or one human review.
+# - Statements ABOUT the candidate that use everyday words ("the candidate seems older",
+#   "is Indian", "is blind", "over 50") are caught by person-context regexes: a subject
+#   (candidate, applicant, he, she, they) plus a predicate verb, or a number with no
+#   following noun. Bare "older", "blind" or "indian" stay unlisted because they have
+#   ordinary technical or domain uses ("older Java services", "blind SQL injection").
+# - Domain vocabulary that cannot describe a person (an employer such as "Department of
+#   Veterans Affairs", a dataset such as "census tract data", a product such as
+#   "FMLA case" tracking) goes in allow_phrases, so healthcare, fintech, HR-tech and
+#   public-sector roles can state their domain and candidates from those employers are
+#   not sent to review for every strength the model writes.
+# - Every required category must stay present with at least one entry, or the service
+#   refuses to start. Extra categories are allowed (appearance, criminal_record,
+#   financial_history and other_status below cover protections in IL, NYC and CA).
+# - After editing, run `uv run pytest tests/scoring -q`. It includes a false-positive
+#   test over ordinary technical resume sentences and a true-positive test per category.
+
+version: 2
+
+metadata:
+  owner: Egen Legal and HR
+  status: DRAFT - pending Legal/HR review
+  drafted_by: Engineering (Applicant Ranking)
+  drafted_on: 2026-10-08
+  revisions:
+    - on: 2026-10-12
+      by: Engineering (Applicant Ranking)
+      summary: >-
+        Version 2, pending the same Legal/HR review: person-context patterns for plain
+        statements about the candidate (age, nationality, origin, health, family) and
+        allow phrases for domain vocabulary that cannot describe a person (employers,
+        datasets, products). Every added allow phrase needs Legal/HR sign-off.
+  reviews: []
+
+allow_phrases:
+  # race_ethnicity false positives: "black" / "white" / "race" / "minority"
+  - white paper
+  - white papers
+  - whitepaper
+  - whitepapers
+  - white-box
+  - black-box
+  - white list
+  - black list
+  - whitelist
+  - blacklist
+  - whitelisting
+  - blacklisting
+  - white-label
+  - white-labeled
+  - white-labelled
+  - white-labeling
+  - white-labelling
+  - Black Friday
+  - black hat
+  - white hat
+  - grey hat
+  - gray hat
+  - black belt
+  - white belt
+  - white space
+  - white glove
+  - black swan
+  - black hole
+  - black-and-white
+  - black-scholes
+  - white noise
+  - white screen
+  - black screen
+  - white board
+  - white-boarding
+  - Black Duck
+  - black formatter
+  - black code formatter
+  - psf/black
+  # Black, the Python code formatter, next to its usual companions
+  - 're:\bblack[\s,/&-]+(?:and[\s-]+)?(?:isort|flake8|ruff|pylint|mypy|prettier|eslint)\b'
+  - 're:\b(?:isort|flake8|ruff|pylint|mypy|prettier|eslint)[\s,/&-]+(?:and[\s-]+)?black\b'
+  - 're:\bwhite(?:[\s-]+on[\s-]+white|[\s-]+colou?red)?[\s-]+(?:text|font|fonts|ink|characters)\b'
+  - race condition
+  - race conditions
+  - data race
+  - data races
+  - race detector
+  - race-free
+  - minority class
+  - minority classes
+  - minority oversampling
+  - synthetic minority
+  # national_origin / citizenship false positives
+  - cloud-native
+  - cloud native
+  - kubernetes-native
+  - React Native
+  - native app
+  - native apps
+  - native application
+  - native applications
+  - native mobile
+  - native code
+  - native image
+  - native module
+  - native modules
+  - accent color
+  - accent colors
+  - accent colour
+  - accent colours
+  - steepest descent
+  - gradient descent
+  - coordinate descent
+  - mirror descent
+  - citizen developer
+  - citizen developers
+  - citizen data scientist
+  - citizen data scientists
+  - citizen science
+  - citizen scientist
+  - citizen-facing
+  - citizen services
+  - citizen engagement
+  - citizen experience
+  # gender false positives: "man" / "male" / "female"
+  - man page
+  - man pages
+  - man-in-the-middle
+  - man hour
+  - man hours
+  - man day
+  - man days
+  - man month
+  - man months
+  - man year
+  - man years
+  - mythical man-month
+  - 're:\b(?:male|female)(?:[\s/-]+(?:(?:and|or|to)[\s-]+)?(?:male|female))?[\s-]+(?:connectors?|headers?|plugs?|jacks?|sockets?|pins?|threads?|adapters?|ports?)\b'
+  - gender-neutral
+  # marital_family false positives: "parent" / "mother" / "daughter" / "single"
+  - parent company
+  - parent companies
+  - mother board
+  - daughter board
+  - daughter card
+  - master branch
+  - master data
+  - single sign-on
+  - single-page
+  # age false positives
+  - young's modulus
+  - young company
+  - young companies
+  - young startup
+  - young startups
+  # religion / veteran / genetic / disability / employment-gap false positives
+  - good faith
+  - bad faith
+  - military-grade
+  - navy blue
+  - genetic algorithm
+  - genetic algorithms
+  - genetic programming
+  - blind spot
+  - blind spots
+  - double-blind
+  - unemployment insurance
+  # Domain vocabulary that cannot describe a person: employers, datasets, products and
+  # fields of work (v2, pending Legal/HR approval). A space in a phrase also matches a
+  # hyphen run, so "zip code level" covers "zip-code level" and "zip code-level".
+  - Veterans Affairs
+  - Department of Veterans Affairs
+  - Navy Federal
+  - Air Force Research Laboratory
+  - Black & Decker
+  - Stanley Black
+  - zip code level
+  - census tract data
+  - census tract level
+  - credit risk
+  - credit scoring
+  - credit bureau
+  - credit decisioning
+  - 're:\bmental[\s-]+health[\s-]+(?:app|apps|platform|startup|provider|providers|data|product|services?)\b'
+  - sick leave accrual
+  - 're:\bparental[\s-]+leave[\s-]+(?:policy|policies|accrual|module|rules)\b'
+  - FMLA case
+  - unemployment claims
+  - immigration law
+  - immigration case management
+  - seizure detection
+  - injury claims
+  - cancer research
+  - cancer registry
+  - cancer registries
+  - cancer center
+  - cancer centre
+  - cancer institute
+  - cancer screening
+  - cancer detection
+  - cancer diagnosis support
+  - cancer patients
+  - cancer data
+  # national_origin: "arab" is listed, these are places and institutions
+  - United Arab Emirates
+  - Arab Emirates
+  - Arab Bank
+  # marital_family: "mom" is listed; a mom-and-pop shop is a kind of business
+  - mom-and-pop
+  - mom & pop
+
+categories:
+  age:
+    - young
+    - younger
+    - youngest
+    - youthful
+    - too young
+    - too old
+    - years old
+    - years of age
+    - 're:\byear[\s-]+old[\s-]+(?:candidates?|applicants?|persons?|people|man|men|woman|women|males?|females?|engineers?|developers?|professionals?|individuals?|workers?|employees?|graduates?|hires?)\b'
+    - 're:\bolder[\s-]+(?:candidates?|applicants?|workers?|employees?|people|persons?|individuals?|professionals?|engineers?|developers?|men|women|man|woman|hires?|generation|demographic|talent)\b'
+    # "the candidate seems older" / "appears to be rather mature": an age judgement as
+    # a predicate about the person ("older Java services" and "a mature platform" are not)
+    - 're:\b(?:candidate|applicant|person|he|she|they)(?:''s)?\s+(?:is|was|are|were|seems|appears|looks|sounds|may\s+be|might\s+be|is\s+likely|is\s+probably|appears\s+to\s+be|seems\s+to\s+be)\s+(?:(?:an?|the|rather|quite|much|probably|likely|somewhat|very|clearly|possibly)\s+){0,2}(?:older|elderly|young|mature|aging|ageing)\b'
+    # "over 50, so ..." / "probably close to 60.": an age-range number with no noun after
+    # it; "over 50 clients", "by about 40%" and "a team of around 30." stay clean
+    - 're:(?<!\bof\s)(?<!\bby\s)(?<!\bto\s)\b(?:over|under|about|around|nearly|almost|close\s+to|approximately|roughly|past)\s+(?:[2-7]\d|[2-7]0s)\b(?=\s*(?:[,.;:!)]|$|so\b|and\b|but\b|which\b|years\s+of\s+age|yrs?\b))'
+    - older generation
+    - younger generation
+    - 're:\b(?:candidate|applicant|person)''s[\s-]+age\b'
+    - 're:\b(?:his|her|their)[\s-]+age\b'
+    - 're:\bages?[\s-]+\d{2}(?:[\s-]+(?:to|and)[\s-]+\d{2}|-\d{2})?\b'
+    - 're:\baged[\s-]+(?:\d{2}|between)\b'
+    - age group
+    - age range
+    - age bracket
+    - age limit
+    - age requirement
+    - maximum age
+    - minimum age
+    - age discrimination
+    - ageism
+    - ageist
+    - underage
+    - date of birth
+    - birth date
+    - birthdate
+    - birthday
+    - year of birth
+    - birth year
+    - dob
+    - 're:\bborn[\s-]+(?:in|on)[\s-]+(?:19|20)\d{2}\b'
+    - 're:\bgraduat(?:ed|ion)[\s-]+(?:in[\s-]+)?(?:19|20)\d{2}\b'
+    - 're:\bclass[\s-]+of[\s-]+(?:19|20)\d{2}\b'
+    - graduation year
+    - graduation date
+    - year of graduation
+    - 're:\bin[\s-]+(?:his|her|their)[\s-]+(?:early[\s-]+|mid[\s-]+|late[\s-]+)?(?:20|30|40|50|60|70)''?s\b'
+    - twenties
+    - thirties
+    - forties
+    - fifties
+    - sixties
+    - seventies
+    - millennial
+    - millennials
+    - gen z
+    - gen x
+    - gen y
+    - generation z
+    - generation x
+    - generation y
+    - zoomer
+    - zoomers
+    - boomer
+    - boomers
+    - baby boomer
+    - baby boomers
+    - digital native
+    - digital natives
+    - recent graduate
+    - recent graduates
+    - recent grad
+    - recent grads
+    - recent college graduate
+    - recent college graduates
+    - new grad
+    - new grads
+    - new graduate
+    - new graduates
+    - fresh graduate
+    - fresh graduates
+    - fresh grad
+    - fresh out of college
+    - fresh out of school
+    - fresh out of university
+    - young blood
+    - fresh blood
+    - overqualified
+    - over-qualified
+    - senior citizen
+    - senior citizens
+    - elderly
+    - geriatric
+    - near retirement
+    - nearing retirement
+    - close to retirement
+    - retirement age
+    - retiree
+    - retirees
+    - late career
+    - over the hill
+    - long in the tooth
+    - set in their ways
+    - set in his ways
+    - set in her ways
+
+  gender:
+    - he
+    - she
+    - him
+    - his
+    - her
+    - hers
+    - himself
+    - herself
+    - s/he
+    - he/she
+    - she/he
+    - him/her
+    - his/her
+    - pronoun
+    - pronouns
+    - gender
+    - genders
+    - gendered
+    - gender identity
+    - gender expression
+    - sex
+    - sexes
+    - male
+    - males
+    - female
+    - females
+    - man
+    - men
+    - woman
+    - women
+    - womens
+    - mens
+    - girl
+    - girls
+    - boy
+    - boys
+    - lady
+    - ladies
+    - gentleman
+    - gentlemen
+    - feminine
+    - masculine
+    - femininity
+    - masculinity
+    - transgender
+    - trans woman
+    - trans women
+    - trans man
+    - trans men
+    - non-binary
+    - nonbinary
+    - genderqueer
+    - cisgender
+    - intersex
+    - maiden name
+    - mrs
+    - sorority
+    - fraternity
+    - salesman
+    - saleswoman
+    - chairman
+    - chairwoman
+    - businessman
+    - businesswoman
+    - spokesman
+    - spokeswoman
+    - foreman
+    - manpower
+
+  race_ethnicity:
+    - race
+    - races
+    - racial
+    - racially
+    - ethnicity
+    - ethnicities
+    - ethnic
+    - ethnically
+    - skin color
+    - skin colour
+    - skin tone
+    - complexion
+    - black
+    - blacks
+    - white
+    - whites
+    - african american
+    - african americans
+    - afro-american
+    - caucasian
+    - hispanic
+    - hispanics
+    - latino
+    - latina
+    - latinos
+    - latinas
+    - latinx
+    - latine
+    - chicano
+    - chicana
+    - asian
+    - asians
+    - asian american
+    - asian americans
+    - pacific islander
+    - pacific islanders
+    - native hawaiian
+    - native american
+    - native americans
+    - american indian
+    - alaska native
+    - alaskan native
+    - indigenous
+    - aboriginal
+    - first nations
+    - inuit
+    - person of color
+    - people of color
+    - persons of color
+    - woman of color
+    - women of color
+    - man of color
+    - men of color
+    - bipoc
+    - biracial
+    - multiracial
+    - mixed race
+    - minority
+    - minorities
+    - ethnic minority
+    - racial minority
+    - underrepresented minority
+    - tribal affiliation
+    - tribal member
+    - tribal membership
+    - tribal enrollment
+    - hbcu
+    - hbcus
+    - historically black
+    - caste
+    - dalit
+    - brahmin
+    - hair texture
+    - natural hair
+    - hairstyle
+    - hairstyles
+    - afro
+    - braids
+    - cornrows
+    - dreadlocks
+    - locs
+
+  national_origin:
+    - national origin
+    - nationality
+    - nationalities
+    - country of origin
+    - country of birth
+    - place of birth
+    - birthplace
+    - born in
+    - born and raised
+    - native of
+    - native-born
+    - foreign-born
+    - foreigner
+    - foreigners
+    - foreign national
+    - foreign nationals
+    - immigrant
+    - immigrants
+    - immigrated
+    - emigrated
+    - emigrant
+    - migrant
+    - migrants
+    - expat
+    - expats
+    - expatriate
+    - expatriates
+    - refugee
+    - refugees
+    - asylum seeker
+    - asylee
+    - ancestry
+    - ancestral
+    - ethnic origin
+    - ethnic background
+    - cultural background
+    - cultural heritage
+    - ethnic heritage
+    - family heritage
+    - 're:\bof[\s-]+[a-z]+(?:[\s-]+[a-z]+)?[\s-]+(?:descent|ancestry|heritage)\b'
+    - native speaker
+    - native speakers
+    - native language
+    - native tongue
+    - mother tongue
+    - first language
+    - 're:\bnative[\s-]+(?:or[\s-]+bilingual[\s-]+)?(?:level[\s-]+|like[\s-]+)?(?:english|spanish|french|german|mandarin|cantonese|chinese|hindi|arabic|portuguese|russian|japanese|korean|italian|fluency|proficiency)\b'
+    - 're:\bnative[\s-]+[a-z]+[\s-]+speakers?\b'
+    - non-native
+    - nonnative
+    - non-english speaker
+    - non-english speaking
+    - english as a second language
+    - esl
+    - limited english
+    - accent
+    - accents
+    - accented
+    - foreign accent
+    - foreign-sounding
+    - ethnic-sounding
+    - foreign name
+    - ethnic name
+    - foreign degree
+    - foreign education
+    - foreign-educated
+    - educated abroad
+    - international student
+    - arab
+    - 're:\b(?:afghan|african|albanian|algerian|american|arab|arabic|argentin(?:e|ian)|armenian|australian|austrian|bangladeshi|belarusian|belgian|bolivian|bosnian|brazilian|british|bulgarian|cambodian|cameroonian|canadian|chilean|chinese|colombian|congolese|croatian|cuban|czech|danish|dominican|dutch|ecuadorian|egyptian|emirati|english|eritrean|ethiopian|european|filipin[oa]|finnish|french|georgian|german|ghanaian|greek|guatemalan|haitian|honduran|hungarian|indian|indonesian|iranian|iraqi|irish|israeli|italian|jamaican|japanese|jordanian|kazakh|kenyan|korean|kurdish|lebanese|libyan|lithuanian|malaysian|mexican|moroccan|nepali|nigerian|norwegian|pakistani|palestinian|persian|peruvian|polish|portuguese|puerto rican|romanian|russian|salvadoran|saudi|scottish|serbian|singaporean|slovak|somali|south african|spanish|sri lankan|sudanese|swedish|swiss|syrian|taiwanese|thai|tunisian|turkish|ugandan|ukrainian|uzbek|venezuelan|vietnamese|welsh|yemeni|zimbabwean)[\s-]+(?:nationals?|citizens?|origin|descent|ancestry|heritage|accent|names?|immigrants?|candidates?|applicants?|man|woman|men|women|persons?|people|background)\b'
+    # "the candidate is Indian" / "appears to be Mexican": a nationality as a predicate
+    # about the person (the adjective before "nationals", "origin", ... is caught above;
+    # "is English-speaking" and "is American Express's lead" are not)
+    - 're:\b(?:candidate|applicant|person|he|she|they)\s+(?:is|was|are|were|seems|appears|looks|sounds|may\s+be|might\s+be|is\s+likely|is\s+probably|appears\s+to\s+be|seems\s+to\s+be)\s+(?:(?:an?|the|probably|likely|clearly|possibly|of)\s+){0,2}(?!(?:[a-z]+)[\s-]+(?:speaking|express\b))(?:afghan|african|albanian|algerian|american|arab|arabic|argentin(?:e|ian)|armenian|australian|austrian|bangladeshi|belarusian|belgian|bolivian|bosnian|brazilian|british|bulgarian|cambodian|cameroonian|canadian|chilean|chinese|colombian|congolese|croatian|cuban|czech|danish|dominican|dutch|ecuadorian|egyptian|emirati|english|eritrean|ethiopian|european|filipin[oa]|finnish|french|georgian|german|ghanaian|greek|guatemalan|haitian|honduran|hungarian|indian|indonesian|iranian|iraqi|irish|israeli|italian|jamaican|japanese|jordanian|kazakh|kenyan|korean|kurdish|lebanese|libyan|lithuanian|malaysian|mexican|moroccan|nepali|nigerian|norwegian|pakistani|palestinian|persian|peruvian|polish|portuguese|puerto rican|romanian|russian|salvadoran|saudi|scottish|serbian|singaporean|slovak|somali|south african|spanish|sri lankan|sudanese|swedish|swiss|syrian|taiwanese|thai|tunisian|turkish|ugandan|ukrainian|uzbek|venezuelan|vietnamese|welsh|yemeni|zimbabwean)\b'
+    # "is from India" / "comes from Nigeria" / "originally from abroad" (a country or
+    # region; "is from scratch" and "came from Google" are not)
+    - 're:\b(?:is|was|be|being|comes?|came|hails?|originally)\s+from\s+(?:the\s+)?(?:afghanistan|africa|albania|algeria|argentina|armenia|asia|australia|austria|bangladesh|belarus|belgium|bolivia|bosnia|brazil|britain|bulgaria|cambodia|cameroon|canada|chile|china|colombia|congo|croatia|cuba|cyprus|czechia|denmark|dominican\s+republic|ecuador|egypt|el\s+salvador|england|eritrea|ethiopia|europe|finland|france|georgia|germany|ghana|greece|guatemala|haiti|honduras|hungary|india|indonesia|iran|iraq|ireland|israel|italy|jamaica|japan|jordan|kazakhstan|kenya|korea|kurdistan|latin\s+america|lebanon|libya|lithuania|malaysia|mexico|middle\s+east|morocco|nepal|netherlands|nigeria|norway|pakistan|palestine|peru|philippines|poland|portugal|puerto\s+rico|romania|russia|saudi\s+arabia|scotland|serbia|singapore|slovakia|somalia|south\s+africa|south\s+america|spain|sri\s+lanka|sudan|sweden|switzerland|syria|taiwan|thailand|tunisia|turkey|uganda|uk|ukraine|united\s+kingdom|united\s+states|us|usa|uzbekistan|venezuela|vietnam|wales|yemen|zimbabwe|abroad|overseas)\b'
+    # "the candidate's name sounds Arab" / "name looks foreign"
+    - 're:\bname\s+(?:sounds|looks|seems|appears)\s+\w+'
+
+  citizenship:
+    - citizenship
+    - citizen
+    - citizens
+    - non-citizen
+    - noncitizen
+    - dual citizen
+    - dual citizenship
+    - u.s. citizen
+    - us citizen
+    - u.s. person
+    - us person
+    - naturalized
+    - naturalised
+    - naturalization
+    - naturalisation
+    - green card
+    - green card holder
+    - permanent resident
+    - permanent residency
+    - lawful permanent resident
+    - immigration
+    - immigration status
+    - undocumented
+    - illegal alien
+    - illegal immigrant
+    - resident alien
+    - nonresident alien
+    - work authorization
+    - work authorisation
+    - employment authorization
+    - employment authorisation
+    - authorized to work
+    - authorised to work
+    - legally authorized
+    - eligible to work
+    - eligibility to work
+    - employment eligibility
+    - right to work
+    - work permit
+    - work visa
+    - e-verify
+    - i-9
+    - ead
+    - h-1b
+    - h1b
+    - h-1b1
+    - h-4
+    - h4 ead
+    - optional practical training
+    - curricular practical training
+    - stem opt
+    - 're:\b(?:on|f-?1)[\s-]+(?-i:OPT)\b'
+    - 're:(?-i:\bOPT\b)[\s-]+(?:ead|status|extension|visa|holder|period|work[\s-]+authori[sz]ation)\b'
+    - 're:\b(?:work|student|employment|tourist|visitor|dependent|spouse|h-?1b|h-?4|l-?1|tn|o-?1|f-?1|j-?1|e-?3)[\s-]+visas?\b'
+    - 're:\bvisas?[\s-]+(?:status|sponsorship|holders?|requirements?|types?|transfers?|stamps?|expir\w*|renewals?|applications?|restrictions?|dependent|issues?|eligibility)\b'
+    - 're:\b(?:on|holds?|holding|requires?|needs?|needed)[\s-]+an?[\s-]+(?:\w+[\s-]+)?visa\b'
+    - 're:\b(?:visa|immigration|employment|work|h-?1b|green[\s-]+card)[\s-]+sponsorship\b'
+    - 're:\b(?:requires?|required|requiring|needs?|needed|needing|without|no)[\s-]+(?:\w+[\s-]+)?sponsorship\b'
+    - 're:\bsponsorship[\s-]+(?:is[\s-]+)?(?:required|needed|available|status)\b'
+    - 're:\bsponsor[\s-]+(?:a[\s-]+|the[\s-]+|their[\s-]+|his[\s-]+|her[\s-]+)?(?:visas?|work[\s-]+permits?|green[\s-]+cards?|h-?1bs?)\b'
+
+  religion:
+    - religion
+    - religions
+    - religious
+    - religiously
+    - faith
+    - faiths
+    - faith-based
+    - creed
+    - spiritual
+    - spirituality
+    - church
+    - churches
+    - mosque
+    - mosques
+    - synagogue
+    - synagogues
+    - parish
+    - congregation
+    - christian
+    - christians
+    - christianity
+    - catholic
+    - catholics
+    - protestant
+    - evangelical
+    - baptist
+    - methodist
+    - lutheran
+    - presbyterian
+    - pentecostal
+    - mormon
+    - latter-day saint
+    - latter-day saints
+    - jehovah's witness
+    - orthodox christian
+    - orthodox jewish
+    - eastern orthodox
+    - greek orthodox
+    - russian orthodox
+    - jewish
+    - jew
+    - jews
+    - judaism
+    - muslim
+    - muslims
+    - moslem
+    - islam
+    - islamic
+    - hindu
+    - hindus
+    - hinduism
+    - buddhist
+    - buddhists
+    - buddhism
+    - sikh
+    - sikhs
+    - sikhism
+    - jain
+    - jainism
+    - zoroastrian
+    - bahai
+    - baha'i
+    - atheist
+    - atheists
+    - atheism
+    - agnosticism
+    - scientology
+    - wiccan
+    - pagan
+    - sabbath
+    - shabbat
+    - shabbos
+    - ramadan
+    - diwali
+    - passover
+    - yom kippur
+    - rosh hashanah
+    - religious holiday
+    - religious holidays
+    - religious attire
+    - hijab
+    - headscarf
+    - niqab
+    - burqa
+    - turban
+    - kippah
+    - yarmulke
+    - kosher
+    - halal
+    - prayer
+    - prayers
+    - pray
+    - praying
+    - worship
+    - bible
+    - biblical
+    - quran
+    - koran
+    - torah
+    - talmud
+    - pastor
+    - priest
+    - rabbi
+    - imam
+    - clergy
+    - deacon
+    - nun
+    - monk
+    - missionary
+    - mission trip
+    - seminary
+    - divinity school
+    - theology
+    - theological
+
+  disability_health:
+    - disability
+    - disabilities
+    - 're:\bdisabled[\s-]+(?:persons?|people|individuals?|candidates?|applicants?|workers?|employees?|status)\b'
+    - person with a disability
+    - people with disabilities
+    - handicap
+    - handicapped
+    - visual impairment
+    - visually impaired
+    - hearing impairment
+    - hearing impaired
+    - mobility impairment
+    - cognitive impairment
+    - legally blind
+    - blindness
+    # "is blind" / "a diabetic": a condition as a predicate about the person ("blind
+    # spot", "blind SQL injection", "is blind to ordering" and "double-blind" are not)
+    - 're:\b(?:is|was|being|an?)\s+(?:blind|deaf|diabetic|epileptic|autistic|dyslexic)\b(?!\s+(?:to\b|spots?\b|tests?\b|sql\b|injection|reviews?\b|recruit\w*|hiring|audition|carbon|copy|date|stud(?:y|ies)\b|trials?\b|rendering|alley|signature|signing))'
+    # "has cancer" / "suffers from depression" / "diagnosed with diabetes"
+    - 're:\b(?:has|had|have|having|with|battling|survived|suffers?\s+from|diagnosed\s+with)\s+(?:cancer|diabetes|epilepsy|hiv|depression|anxiety|a\s+disability|disabilities)\b'
+    - deaf
+    - deafness
+    - hard of hearing
+    - wheelchair
+    - wheelchair user
+    - amputee
+    - prosthesis
+    - prosthetic
+    - paralyzed
+    - paralysed
+    - paraplegic
+    - quadriplegic
+    - epileptic
+    - seizure
+    - seizures
+    - chronic illness
+    - chronic pain
+    - chronic condition
+    - chronic disease
+    - illness
+    - illnesses
+    - ill health
+    - sickness
+    - sick leave
+    - sick days
+    - medical condition
+    - medical conditions
+    - medical history
+    - medical leave
+    - medical issue
+    - medical issues
+    - medical reasons
+    - health condition
+    - health conditions
+    - health issue
+    - health issues
+    - health problem
+    - health problems
+    - health status
+    - health history
+    - poor health
+    - pre-existing condition
+    - mental health
+    - mental illness
+    - mental disorder
+    - psychiatric
+    - depression
+    - depressed
+    - anxiety
+    - bipolar
+    - schizophrenia
+    - ptsd
+    - ocd
+    - adhd
+    - autism
+    - autistic
+    - asperger
+    - asperger's
+    - aspergers
+    - on the spectrum
+    - neurodivergent
+    - neurodiverse
+    - neurodiversity
+    - dyslexia
+    - dyslexic
+    - dyspraxia
+    - stutter
+    - stuttering
+    - stammer
+    - speech impediment
+    - hiv-positive
+    - hiv status
+    - cancer survivor
+    - cancer diagnosis
+    - addiction
+    - substance abuse
+    - alcoholism
+    - alcoholic
+    - drug rehab
+    - rehab
+    - sobriety
+    - burnout
+    - injury
+    - injuries
+    - injured
+    - reasonable accommodation
+    - disability accommodation
+    - workplace accommodation
+    - able-bodied
+    - physically fit
+    - physical fitness
+    - physical limitation
+    - physical limitations
+    - vaccination status
+    - vaccinated
+    - unvaccinated
+    - long covid
+
+  pregnancy:
+    - pregnant
+    - pregnancy
+    - pregnancies
+    - maternity
+    - maternity leave
+    - paternity
+    - paternity leave
+    - parental leave
+    - family leave
+    - fmla
+    - expecting a baby
+    - expecting a child
+    - having a baby
+    - new baby
+    - newborn
+    - childbirth
+    - postpartum
+    - prenatal
+    - breastfeeding
+    - lactation
+    - nursing mother
+    - miscarriage
+    - ivf
+    - fertility
+    - infertility
+    - trying to conceive
+    - reproductive health
+    - abortion
+    - contraception
+    - birth control
+    - family planning
+
+  marital_family:
+    - marital status
+    - marital
+    - married
+    - unmarried
+    - marriage
+    - single mother
+    - single father
+    - single parent
+    - single mom
+    - single dad
+    - single mothers
+    - single parents
+    - divorced
+    - divorce
+    - divorcee
+    - widowed
+    - widow
+    - widower
+    - spouse
+    - spouses
+    - spousal
+    - husband
+    - husbands
+    - wife
+    - wives
+    - fiance
+    - fiancee
+    - fiancé
+    - fiancée
+    - girlfriend
+    - boyfriend
+    - domestic partner
+    - domestic partnership
+    - civil union
+    - life partner
+    - mother
+    - mothers
+    - father
+    - fathers
+    - working mom
+    - working mother
+    - working dad
+    # "a mom returning to work": lower-case or capitalised only, so the acronym MOM
+    # (message-oriented middleware) is not a hit
+    - 're:\b(?-i:[Mm]om|[Mm]oms|[Mm]um|[Mm]ums|[Dd]ad|[Dd]ads)\b'
+    - stay-at-home mom
+    - stay-at-home dad
+    - stay-at-home parent
+    - homemaker
+    - housewife
+    - househusband
+    - motherhood
+    - fatherhood
+    - parenthood
+    - parenting
+    - parental status
+    - 're:\b(?:has|have|had|having|with|their|his|her)[\s-]+(?:an?[\s-]+)?(?:one|two|three|four|five|six|several|many|multiple|young|small|little|\d)[\s-]+(?:children|child|kids?)\b'
+    - number of children
+    - childless
+    - kids
+    - son
+    - sons
+    - daughter
+    - daughters
+    - grandchild
+    - grandchildren
+    - grandmother
+    - grandfather
+    - grandparent
+    - grandparents
+    - childcare
+    - child care
+    - daycare
+    - caregiver
+    - caregivers
+    - caregiving
+    - care giver
+    - caretaker
+    - elder care
+    - eldercare
+    - family responsibilities
+    - family obligations
+    - family commitments
+    - family status
+    - familial status
+    - family reasons
+    - family situation
+    - start a family
+    - starting a family
+    - military spouse
+
+  sexual_orientation:
+    - sexual orientation
+    - sexuality
+    - sexual preference
+    - gay
+    - gays
+    - lesbian
+    - lesbians
+    - bisexual
+    - homosexual
+    - heterosexual
+    - asexual
+    - pansexual
+    - queer
+    - lgbt
+    - lgbtq
+    - lgbtq+
+    - lgbtqia
+    - lgbtqia+
+    - lgbtq2s+
+    - glbt
+    - same-sex
+    - pride month
+    - pride network
+    - pride parade
+    - two-spirit
+
+  veteran_military:
+    - veteran
+    - veterans
+    - veteran status
+    - protected veteran
+    - disabled veteran
+    - combat veteran
+    - military
+    - military service
+    - military experience
+    - military status
+    - military leave
+    - armed forces
+    - army
+    - navy
+    - air force
+    - marine corps
+    - marines
+    - national guard
+    - coast guard
+    - army reserve
+    - reservist
+    - service member
+    - service members
+    - servicemember
+    - servicemembers
+    - active duty
+    - honorable discharge
+    - honorably discharged
+    - dishonorable discharge
+    - discharge status
+    - military discharge
+    - dd-214
+    - dd214
+    - gi bill
+    - tour of duty
+    - combat experience
+    - combat deployment
+    - enlisted
+    - usmc
+    - usaf
+    - uniformed services
+    - userra
+    - sergeant
+    - lieutenant
+    - corporal
+    - colonel
+
+  genetic:
+    - genetic information
+    - genetic test
+    - genetic tests
+    - genetic testing
+    - genetic screening
+    - genetic predisposition
+    - genetic condition
+    - genetic disorder
+    - genetic disease
+    - genetic history
+    - genetic makeup
+    - genetic marker
+    - genetic markers
+    - genetic information nondiscrimination act
+    - family medical history
+    - family history of
+    - hereditary
+    - inherited condition
+    - inherited disease
+    - carrier status
+    - dna test
+    - dna testing
+    - dna results
+
+  employment_gap:
+    - employment gap
+    - employment gaps
+    - career gap
+    - career gaps
+    - resume gap
+    - resume gaps
+    - 're:\b(?:employment|career|work|resume|résumé|cv|job)[\s-]+(?:history[\s-]+)?gaps?\b'
+    - 're:\bgaps?[\s-]+(?:in|between)[\s-]+(?:(?:his|her|their|the|its)[\s-]+)?(?:employment|jobs|roles|positions|work[\s-]+history|employment[\s-]+history|career|resume|résumé|cv)\b'
+    - time between jobs
+    - time between roles
+    - between jobs
+    - unemployed
+    - unemployment
+    - unemployment status
+    - jobless
+    - out of work
+    - out of the workforce
+    - left the workforce
+    - re-entering the workforce
+    - reentering the workforce
+    - returning to the workforce
+    - returnship
+    - career break
+    - career breaks
+    - career hiatus
+    - career pause
+    - sabbatical
+    - gap year
+    - took time off
+    - taking time off
+    - time off from work
+    - time away from work
+    - no gaps
+    - continuous employment
+    - job hopping
+    - job hopper
+    - job hoppers
+
+  location_proxy:
+    - zip code
+    - zip codes
+    - zipcode
+    - zipcodes
+    - postal code
+    - postal codes
+    - postcode
+    - area code
+    - home address
+    - street address
+    - residential address
+    - place of residence
+    - neighborhood
+    - neighborhoods
+    - neighbourhood
+    - neighbourhoods
+    - lives in
+    - lives near
+    - lived in
+    - living in
+    - resides in
+    - residing in
+    - resident of
+    - commute
+    - commuting
+    - commuting distance
+    - commute time
+    - distance from the office
+    - distance to the office
+    - 're:\bwithin[\s-]+\d+[\s-]*(?:miles?|mi|km|kilometers?|kilometres?)\b'
+    - local candidates
+    - local candidates only
+    - local applicants
+    - locals only
+    - local residents
+    - inner city
+    - inner-city
+    - ghetto
+    - barrio
+    - suburb
+    - suburbs
+    - suburban
+    - census tract
+
+  # ---- Beyond the required categories ------------------------------------------------
+  # NYC HRL protects height and weight; photos invite judgments on appearance, race, age.
+  appearance:
+    - physical appearance
+    - physically attractive
+    - unattractive
+    - good-looking
+    - handsome
+    - overweight
+    - obese
+    - obesity
+    - body weight
+    - heavyset
+    - petite
+    - 're:\b(?:his|her|their|candidate''s|applicant''s)[\s-]+(?:height|weight|looks|appearance|build|physique)\b'
+    - 're:\b(?:candidate''s|applicant''s|profile|passport|resume|cv)[\s-]+(?:photos?|photographs?|pictures?|headshots?)\b'
+    - headshot
+    - headshots
+    - selfie
+    - tattoo
+    - tattoos
+    - piercing
+    - piercings
+
+  # IL HRA, NYC Fair Chance Act and CA Fair Chance Act restrict use of these records.
+  criminal_record:
+    - criminal record
+    - criminal records
+    - criminal history
+    - criminal background
+    - criminal conviction
+    - criminal convictions
+    - conviction record
+    - arrest record
+    - arrest
+    - arrests
+    - arrested
+    - convicted
+    - felony
+    - felonies
+    - felon
+    - misdemeanor
+    - misdemeanour
+    - incarcerated
+    - incarceration
+    - imprisoned
+    - imprisonment
+    - prison
+    - in jail
+    - jail time
+    - served time
+    - parole
+    - parolee
+    - ex-offender
+    - ex-con
+    - formerly incarcerated
+    - justice-involved
+    - sealed record
+    - expunged
+    - expungement
+    - dui
+    - dwi
+
+  # NYC and CA restrict credit history; IL, NYC and CA ban salary-history inquiries.
+  financial_history:
+    - credit history
+    - credit check
+    - personal credit
+    - 're:\b(?:his|her|their|candidate''s|applicant''s)[\s-]+(?:credit|debts?|finances|financial[\s-]+situation)\b'
+    - 're:\b(?:filed|declared|personal)[\s-]+(?:for[\s-]+)?bankruptcy\b'
+    - wage garnishment
+    - salary history
+    - pay history
+    - compensation history
+    - previous salary
+    - prior salary
+    - current salary
+    - past salary
+
+  # IL protects order-of-protection status; NYC protects victims of domestic violence,
+  # sexual offenses and stalking; CA and others protect political activity.
+  other_status:
+    - domestic violence
+    - order of protection
+    - protective order
+    - victim of stalking
+    - survivor of sexual assault
+    - sexual assault survivor
+    - political affiliation
+    - political affiliations
+    - political views
+    - political beliefs
+    - political party
+    - political activity
+    - union membership
+    - labor union
+    - trade union

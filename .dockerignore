@@ -1,0 +1,38 @@
+# Keep the build context to what the image needs: pyproject.toml, uv.lock, README.md,
+# src/, criteria/ and config/. Patterns without a leading "**/" match at the context
+# root only, so src/applicant_ranking/data/ (the packaged lexicon) is NOT excluded.
+
+# VCS, tooling, local environments
+.git
+.gitignore
+.venv
+.direnv
+.pytest_cache
+.ruff_cache
+.mypy_cache
+**/__pycache__
+**/*.py[cod]
+.DS_Store
+**/.DS_Store
+.idea
+.vscode
+# Any other dot-entry at the context root (local tool configuration)
+.*
+
+# Secrets and local configuration (.env, .env.*, .envrc)
+.env*
+
+# Candidate data and outputs: never in an image
+data/
+reports/
+**/*.sqlite
+**/*.sqlite3
+**/*.db
+
+# Not needed at runtime
+tests
+.research
+docs/*.pdf
+*.pdf
+Dockerfile
+.dockerignore

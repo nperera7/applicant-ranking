@@ -1,0 +1,13 @@
+{
+  "triggeredAt": 1431454330072,
+  "event": "candidateStageChange",
+  "data": {
+    "opportunityId": "3410c8b9-5c31-4bab-b7e9-9f710206d647",
+    "candidateId": "daeaa038-cddb-4d69-9b8c-74b6c23be3f3",
+    "contactId": "05c248f9-ccb1-435f-bab5-0ec608aec263",
+    "toStageId": "7c2690d8-6308-4ed9-ae2a-cbfe7db26593",
+    "fromStageId": "992f01a9-ee19-41d2-ae79-1040701b195c"
+  },
+  "signature": "28e3fbb90ce869c3695c4a9559ff43eae998389a48b42c509d1adbeea0897c16",
+  "token": "be58f711f349c7780e4579cd7c63341ac6f881e4dccc3154"
+}

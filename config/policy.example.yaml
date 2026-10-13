@@ -1,0 +1,125 @@
+# Jurisdiction policy for Applicant Ranking (example; NOT approved).
+#
+# Copy to config/policy.yaml (or the path in AR_POLICY_FILE) and have Egen Legal/HR
+# complete every field. The engine FAILS CLOSED: DRY_RUN and LIVE runs are blocked while
+# this file is missing, unapproved, or incomplete for a regime that applies to a posting.
+# EVALUATION runs are never blocked; their output is watermarked and cannot reach Lever.
+#
+# The rules below come from research dated 2026-10-08. They are NOT legal advice: Legal
+# must confirm each requirement, each date and each source before approving this file.
+# Dates are YYYY-MM-DD. Unknown keys are rejected so typos fail loudly.
+
+# Bump when Legal/HR change anything, and approve again.
+version: 1
+
+# Who in Legal/HR signed off this file, and on which date. Both must be set or every
+# DRY_RUN/LIVE run is blocked. Re-approve after any change.
+approved_by: null
+approved_at: null
+
+# Countries (ISO 3166 codes) whose applicants may be ranked. Postings elsewhere are
+# blocked: EU AI Act (Annex III high-risk, obligations from 2027-12-02), UK GDPR, India
+# DPDP and others have not been assessed. NOTE: "CA" here means Canada, not California.
+# A posting without a country counts as US only when every location names a US state.
+# Legal: confirm the list; add CA only once the Ontario rules below are satisfied.
+allowed_countries: [US]
+
+# Location labels the engine cannot map to a US state or city ("Hudson Yards Office",
+# "HQ", "Denver Tech Center"). A US posting with such a label is BLOCKED until Lever has a
+# structured address for it (Lever keeps one for the primary location only) or Legal/HR
+# list the label here with the regimes that apply there: IL_HRA, NYC_LL144, CO_ADMT,
+# CA_FEHA, ON_ESA; [] means the label adds none. Labels are matched case-insensitively.
+# Listed regimes are added to the detected ones, never removed.
+#   location_overrides:
+#     Hudson Yards Office: [NYC_LL144]
+#     Denver Tech Center: [CO_ADMT]
+#     HQ: []
+location_overrides: {}
+
+# IL_HRA - Illinois Human Rights Act as amended by HB 3773 (Public Act 103-0804), in force
+# 2026-01-01. Always applies (Egen HQ is in Naperville, IL). Using AI with a discriminatory
+# effect, or zip codes as a proxy, is a civil-rights violation, and so is failing to
+# notify applicants that AI is used. IDHR's notice rules (Subpart J) were postponed on
+# 2026-06-02, so no rule yet says how to give notice.
+illinois:
+  # URL of the published AI-use notice for applicants (careers site). Legal confirms
+  # its content: tool and vendor, purpose, data used, contact, accommodation route.
+  notice_url: null
+  # true once TA has added the AI-use notice to the Lever job posting text and Legal
+  # has confirmed the wording.
+  posting_notice_confirmed: false
+
+# NYC_LL144 - NYC Local Law 144 (automated employment decision tools; DCWP rules,
+# 6 RCNY 5-300). Applies to jobs at an NYC office (Manhattan, Brooklyn, Queens, Bronx,
+# Staten Island), or fully remote jobs associated with an NYC office.
+nyc:
+  # Legal: are Egen's remote roles associated with an NYC office? If true, every remote
+  # posting is treated as NYC.
+  remote_roles_associated_with_nyc_office: false
+  # Completion date of the independent bias audit. Must be no more than 365 days old;
+  # runs are blocked once it is older.
+  bias_audit_date: null
+  # URL of the published audit summary. It must stay published for at least 6 months
+  # after the tool's last use.
+  audit_summary_url: null
+  # Date the candidate notice was published (qualifications assessed, how to request an
+  # alternative process or accommodation, data-request channel). Use starts only after
+  # 10 NYC business days.
+  notice_published_at: null
+  # Days that are not NYC business days, besides weekends. Legal must confirm which days
+  # count. Listing extra days only delays the start (the conservative direction). This
+  # sample lists US federal and New York State public holidays for late 2026 and 2027.
+  holidays:
+    - 2026-10-12  # Columbus Day / Indigenous Peoples' Day
+    - 2026-11-03  # Election Day (NY State)
+    - 2026-11-11  # Veterans Day
+    - 2026-11-26  # Thanksgiving
+    - 2026-12-25  # Christmas
+    - 2027-01-01  # New Year's Day
+    - 2027-01-18  # Martin Luther King Jr. Day
+    - 2027-02-12  # Lincoln's Birthday (NY State)
+    - 2027-02-15  # Washington's Birthday / Presidents' Day
+    - 2027-05-31  # Memorial Day
+    - 2027-06-18  # Juneteenth (observed; 06-19 is a Saturday)
+    - 2027-07-05  # Independence Day (observed; 07-04 is a Sunday)
+    - 2027-09-06  # Labor Day
+    - 2027-10-11  # Columbus Day / Indigenous Peoples' Day
+    - 2027-11-02  # Election Day (NY State)
+    - 2027-11-11  # Veterans Day
+    - 2027-11-25  # Thanksgiving
+    - 2027-12-24  # Christmas (observed; 12-25 is a Saturday)
+
+# CO_ADMT - Colorado SB 26-189 (signed 2026-05-14; replaced SB 24-205). Covers
+# consequential decisions on or after 2027-01-01; ranking and scoring "materially
+# influence" them. Applies to Colorado locations and to US-remote postings
+# (Colorado-resident applicants). Before 2027-01-01 it is a note only; from then on
+# DRY_RUN/LIVE runs are blocked until this is true. The AG's draft rules (4 CCR 904-6)
+# are not final.
+colorado:
+  # true once TA/Legal run the adverse-outcome workflow: a plain-language disclosure
+  # within 30 days of an adverse outcome (tool's role, name and version, developer, data
+  # types and sources), data correction, and meaningful human review on request.
+  adverse_outcome_workflow_ready: false
+
+# CA_FEHA - California Civil Rights Council ADS regulations (2 CCR 11008 ff.), in force
+# 2025-10-01. Applies to California locations and US-remote postings. Records,
+# including ADS data and selection criteria, are kept 4 years (AR_RETENTION_DAYS defaults
+# to 1461). The same postings are checked against the CCPA ADMT regulations, which must
+# be met from 2027-01-01.
+california:
+  # Legal decides whether the CCPA ADMT article applies; it does not when a trained
+  # reviewer with authority to decide reviews the output together with other information.
+  # null = undecided: from 2027-01-01 that blocks DRY_RUN/LIVE runs.
+  ccpa_admt_applies: null
+  # Needed from 2027-01-01 when ccpa_admt_applies is true: the pre-use notice and the
+  # opt-out/appeal path are published.
+  ccpa_notice_ready: false
+
+# ON_ESA - Ontario Employment Standards Act (Working for Workers Four Act, 2024; O. Reg.
+# 476/24), for publicly advertised postings on or after 2026-01-01 (employers with 25+
+# employees). Applies to Ontario locations (Mississauga, Toronto, ...) and to postings in
+# Canada. Not yet checked against the primary texts; Legal must verify these rules.
+ontario:
+  # true once the Lever posting (and its application form) states that AI is used to
+  # screen, assess or select applicants.
+  posting_disclosure_confirmed: false

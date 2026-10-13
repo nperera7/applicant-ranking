@@ -1,0 +1,136 @@
+# EXAMPLE criteria file for Applicant Ranking. It is NOT approved and matches no
+# posting (posting_ids is empty), so it is never used to rank real applicants. Copy it
+# to start a new role: rename the file, change role_id, and fill in your own content.
+#
+# Applicant Ranking is advisory. It orders applications for recruiters to review and
+# never rejects, archives or advances anyone. The model rates each requirement below
+# against quotes from the resume, and the score is computed from those ratings.
+#
+# WHO DOES WHAT
+#   The hiring manager writes the requirements. TA/HR reviews and approves the file.
+#   Approved criteria can be used in dry-run and live runs; unapproved criteria only
+#   in evaluation runs. Check the file with: applicant-ranking criteria lint
+#
+# FIELDS
+#   role_id      Short id for the role: lowercase letters, digits, "-" or "_", at most
+#                40 characters, unique across all criteria files.
+#   title        The role title, as it appears in reports.
+#   version      Increase by 1 every time you change anything below. Each result
+#                records the version and a fingerprint of the content it was scored
+#                against.
+#   posting_ids  The Lever posting ids this file applies to. Find the id in the
+#                posting's URL in Lever. A posting id may appear in one file only.
+#   summary      Two or three sentences on what the person in this role does. The
+#                model reads it as context.
+#   requirements What to look for, 1 to 25 items. Each item has:
+#                  id           short slug, unique within the file (also unique
+#                               against knockout ids)
+#                  description  one observable, job-related capability. Write what
+#                               a resume would have to show, e.g. "Has built
+#                               production pipelines on BigQuery", not "Strong data
+#                               skills". At least 15 characters.
+#                  importance   must_have or nice_to_have. Keep must-haves to 10
+#                               or fewer.
+#                  weight       optional, 0.5 to 10. Defaults: must_have 3,
+#                               nice_to_have 1. Raise it only for what matters most.
+#   knockouts    Hard requirements, at most 10. A knockout is only FLAGGED for a
+#                recruiter to confirm, never applied automatically. It is marked unmet
+#                only on explicit evidence in the resume. Each needs a justification
+#                explaining why it is essential to the job. Work authorisation, visa,
+#                sponsorship and citizenship are NOT allowed as knockouts: ask them as
+#                structured Lever application questions instead.
+#   guardrails   Extra evaluation rules for the model, job-related only. The rules on
+#                fairness and protected characteristics are already built in, so do
+#                not repeat them here.
+#   source       hiring_manager for curated criteria. Files drafted automatically from
+#                a Lever posting say job_description until a person rewrites them.
+#   approved_terms
+#                Usually empty. Domain vocabulary the linter would otherwise reject
+#                because it is also a protected-term proxy ("credit history" for a
+#                lender's risk role, "Veterans Affairs" for a public-sector client).
+#                Each entry has term, justification, approved_by and approved_at,
+#                recorded by Legal/HR; the linter then reports the term as a warning
+#                naming the approver instead of an error. It never relaxes what the
+#                model may write about a candidate.
+#   approved_by  Set by TA/HR on approval: the approver's name.
+#   approved_at  Set by TA/HR on approval: date and time, e.g. 2026-10-08T15:00:00Z.
+#                Approval does not change the content fingerprint.
+#
+# NEVER WRITE (the linter blocks these; they are protected characteristics or proxies)
+#   age or generation words ("young", "digital native", "recent graduate"), graduation
+#   years, a maximum number of years of experience ("no more than 8 years"),
+#   "overqualified", gender words or pronouns (say "the candidate"), "native English
+#   speaker" (write "clear written English for client documents" if the job needs it),
+#   "culture fit", "local candidates only", "no employment gaps", nationality,
+#   citizenship or visa status, religion, health or disability, family or marital
+#   status, military status, and addresses or zip codes.
+#   Degrees: prefer skills. If a degree is truly needed, add "or equivalent experience".
+
+role_id: example-senior-data-engineer
+title: Senior Data Engineer (example)
+version: 1
+posting_ids: []
+summary: >-
+  Designs, builds and operates production data pipelines on Google Cloud for Egen's
+  clients, and works directly with client engineering and analytics teams to turn
+  their requirements into reliable data platforms.
+
+requirements:
+  - id: gcp-pipelines
+    description: >-
+      Has built and operated production batch or streaming data pipelines on Google
+      Cloud (BigQuery, Dataflow, Dataproc or Cloud Composer).
+    importance: must_have
+    weight: 4
+  - id: python
+    description: >-
+      Writes production-quality Python for data processing, with tests, packaging and
+      code review.
+    importance: must_have
+  - id: sql-modelling
+    description: >-
+      Designs analytical data models and writes complex, efficient SQL (window
+      functions, partitioning and clustering, query cost control).
+    importance: must_have
+  - id: orchestration
+    description: >-
+      Has scheduled and monitored production pipelines with an orchestrator such as
+      Airflow/Cloud Composer, Dagster or Prefect.
+    importance: must_have
+  - id: data-quality
+    description: >-
+      Has implemented data quality checks, lineage or pipeline observability in
+      production (for example Great Expectations, dbt tests or Dataplex).
+    importance: nice_to_have
+  - id: streaming
+    description: >-
+      Has built streaming pipelines with Pub/Sub, Kafka or Dataflow streaming,
+      including windowing and late-arriving data.
+    importance: nice_to_have
+    weight: 2
+  - id: iac-cicd
+    description: >-
+      Uses infrastructure as code (Terraform) and CI/CD to deploy data workloads.
+    importance: nice_to_have
+  - id: client-facing
+    description: >-
+      Client-facing consulting: gathering requirements, presenting designs and
+      working alongside client teams.
+    importance: nice_to_have
+
+knockouts:
+  - id: hands-on-sql
+    description: Hands-on experience writing SQL against production data.
+    justification: >-
+      Every client engagement for this role requires writing and reviewing SQL daily;
+      the role has no non-SQL variant.
+
+guardrails:
+  - Do not credit certifications without hands-on project experience.
+  - >-
+    Equivalent work on AWS or Azure data services (for example Glue, EMR, Redshift,
+    Synapse or Databricks) counts as partial evidence for gcp-pipelines.
+  - Judge demonstrated work in projects and roles; a skills list alone is not evidence.
+
+source: hiring_manager
+# approved_by and approved_at are added by TA/HR when the criteria are approved.

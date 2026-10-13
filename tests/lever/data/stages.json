@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "id": "fff60592-31dd-4ebe-ba8e-e7a397c30f8e",
+      "text": "New applicant"
+    },
+    {
+      "id": "51adb2bb-1e24-4135-9950-cb96e3886226",
+      "text": "New lead"
+    },
+    {
+      "id": "a42482ff-00ac-4cb2-a698-4b4436885b0c",
+      "text": "Recruiter Screen"
+    },
+    {
+      "id": "fe763d80-e612-4787-98bc-686679c6ac9b",
+      "text": "Phone Interview"
+    },
+    {
+      "id": "fbfb4473-38d2-4acf-943b-28cc0ed7ba87",
+      "text": "On-Site Interview"
+    },
+    {
+      "id": "e7c6f8eb-9239-46b8-8777-ef4215cc8a7d",
+      "text": "Background Check"
+    },
+    {
+      "id": "f48aad6f-91f7-4e87-b3f3-5e7a9207e54b",
+      "text": "Offer"
+    }
+  ]
+}
